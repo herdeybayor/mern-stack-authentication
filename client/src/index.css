@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:focus~.input-text,
+input:valid~.input-text {
+    @apply -translate-x-3 -translate-y-4 scale-75 bg-teal-200 dark:bg-black px-1 text-blue-600 dark:text-white;
+}
+
+input:valid~.input-text {
+    @apply text-teal-700;
+}
+
+input:focus~.input-text {
+    @apply text-blue-600 dark:text-blue-600;
+}
+
+/* Change autocomplete styles in WebKit
+input:-webkit-autofill:focus
+{
+    border: 2px solid rgb(37 99 235);
+    -webkit-text-fill-color: rgb(15 118 110);
+    -webkit-box-shadow: 0 0 0px 1000px rgb(153 246 228) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill
+{
+    border: 1px solid rgb(15 118 110);
+    -webkit-text-fill-color: rgb(15 118 110);
+    -webkit-box-shadow: 0 0 0px 1000px rgb(153 246 228) inset;
+    transition: background-color 5000s ease-in-out 0s;
+} */
