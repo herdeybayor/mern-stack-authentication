@@ -1,11 +1,20 @@
 # mern-stack-authentication
-<h1>MERN STACK AUTHENTICATION</h1>
+What is working:
+Express session server for authentication
+React routes
+
+What is not working:
+Connecting my client to server
+Post request for register and login
+I want to protect profile route so it will only render when user is logged in
+
 <h3>Setting up Client<h3>
   <ul>
     <li>cd client</li>
     <li>npm install</li>
     <li>npm start</li>
   </ul>
+  
 <h3>Setting up Server<h3>
   <ul>
     <li>cd server</li>
