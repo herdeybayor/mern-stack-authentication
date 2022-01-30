@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FormGroup from "./FormGroup";
 import SubmitButton from "./SubmitButton";
+import Axios from "axios";
+import { UserContext } from "./UserContext";
 function Register() {
+  let navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
@@ -56,9 +61,32 @@ function Register() {
       }
     });
   }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    Axios({
+      method: "POST",
+      data: formData,
+      withCredentials: true,
+      url: "http://localhost:3001/register",
+    })
+      .then((res) => {
+        setIsLoggedIn(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate("/profile", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <div className="flex h-screen justify-center items-center bg-teal-200 dark:bg-black px-8">
-      <form className="text-center" action="/register" method="POST">
+      <form
+        onSubmit={handleSubmit}
+        className="text-center"
+        action="/register"
+        method="POST"
+      >
         <FormGroup
           change={(e) => {
             handleChange(e);

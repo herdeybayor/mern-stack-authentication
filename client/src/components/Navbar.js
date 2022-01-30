@@ -1,13 +1,17 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   LoginIcon,
   HomeIcon,
   DatabaseIcon,
   LightBulbIcon,
   MoonIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
+import Axios from "axios";
+import { UserContext } from "./UserContext";
 function Navbar() {
+  let navigate = useNavigate();
   const [navbarVisibility, setNavbarVisibility] = useState(false);
   const [theme, setTheme] = useState(localStorage.theme);
   const colorTheme = theme === "dark" ? "light" : "dark";
@@ -20,6 +24,23 @@ function Navbar() {
       root.classList.remove(theme);
     };
   }, [theme, colorTheme]);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  function handleLogout(e) {
+    e.preventDefault();
+    Axios({
+      method: "POST",
+      withCredentials: true,
+      url: "http://localhost:3001/logout",
+    })
+      .then((res) => {
+        setIsLoggedIn(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <nav className="bg-white flex items-center justify-between fixed top-0 left-0 w-full py-4 shadow z-30">
@@ -33,20 +54,34 @@ function Navbar() {
       </div>
 
       <div className="hidden md:flex mr-8">
-        <Link
-          to="/login"
-          className="flex items-cente bg-teal-700 dark:bg-black text-teal-200 dark:text-white px-5 py-2 rounded-md odd:mr-6 hover:bg-teal-900 dark:hover:bg-gray-800"
-        >
-          <LoginIcon className="h-5 w-5" />
-          <p>Login</p>
-        </Link>
-        <Link
-          to="/register"
-          className="flex items-center  bg-teal-700 dark:bg-black text-teal-200 dark:text-white px-5 py-2 rounded-md odd:mr-6 hover:bg-teal-900 dark:hover:bg-gray-800"
-        >
-          <DatabaseIcon className="h-5 w-5" />
-          <p>Register</p>
-        </Link>
+        {isLoggedIn.loggedIn ? (
+          <Link
+            onClick={handleLogout}
+            to="/logout"
+            className="flex items-center bg-teal-700 dark:bg-black text-teal-200 dark:text-white px-5 py-2 rounded-md odd:mr-6 hover:bg-teal-900 dark:hover:bg-gray-800"
+          >
+            <LogoutIcon className="h-5 w-5" />
+            <p>Logout</p>
+          </Link>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="flex items-center bg-teal-700 dark:bg-black text-teal-200 dark:text-white px-5 py-2 rounded-md odd:mr-6 hover:bg-teal-900 dark:hover:bg-gray-800"
+            >
+              <LoginIcon className="h-5 w-5" />
+              <p>Login</p>
+            </Link>
+            <Link
+              to="/register"
+              className="flex items-center  bg-teal-700 dark:bg-black text-teal-200 dark:text-white px-5 py-2 rounded-md odd:mr-6 hover:bg-teal-900 dark:hover:bg-gray-800"
+            >
+              <DatabaseIcon className="h-5 w-5" />
+              <p>Register</p>
+            </Link>
+          </>
+        )}
+
         <span
           onClick={() => {
             setTheme(colorTheme);

@@ -1,9 +1,26 @@
 import { DatabaseIcon, LoginIcon } from "@heroicons/react/outline";
+import Axios from "axios";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import { UserContext } from "./UserContext";
 function Home() {
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:3001/page",
+    })
+      .then((res) => {
+        setIsLoggedIn(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
-    <div className="continer flex h-screen justify-center items-center flex-col bg-teal-200 text-center dark:bg-black transition duration-500">
+    <div className="flex h-screen justify-center items-center flex-col bg-teal-200 text-center dark:bg-black transition duration-500">
       <h1 className="text-teal-700 dark:text-white font-bold text-4xl">
         MERN STACK AUTHENTICATION
       </h1>
