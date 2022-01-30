@@ -5,6 +5,7 @@ const router = require("./routes/index");
 const passport = require("passport");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -12,6 +13,12 @@ const port = process.env.PORT || 3001;
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 // Create .env file and add SECRET and DB_STRING=mongodb://localhost:27017/mernAuthDB
 app.use(
   session({
