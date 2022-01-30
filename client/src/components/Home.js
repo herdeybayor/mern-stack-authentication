@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "./UserContext";
 function Home() {
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  const { setIsLoggedIn } = useContext(UserContext);
   useEffect(() => {
     Axios({
       method: "GET",
@@ -18,7 +18,7 @@ function Home() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [setIsLoggedIn]);
   return (
     <div className="flex h-screen justify-center items-center flex-col bg-teal-200 text-center dark:bg-black transition duration-500">
       <h1 className="text-teal-700 dark:text-white font-bold text-4xl">

@@ -6,7 +6,7 @@ import Axios from "axios";
 import { UserContext } from "./UserContext";
 function Register() {
   let navigate = useNavigate();
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  const { setIsLoggedIn } = useContext(UserContext);
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
