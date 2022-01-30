@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormGroup from "./FormGroup";
-import SubmitButton from "./SubmitButton";
+import FormGroup from "../components/FormGroup";
+import SubmitButton from "../components/SubmitButton";
 import Axios from "axios";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../contexts/UserContext";
 function Register() {
   let navigate = useNavigate();
   const { setIsLoggedIn } = useContext(UserContext);

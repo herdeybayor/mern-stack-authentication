@@ -9,7 +9,7 @@ import {
   LogoutIcon,
 } from "@heroicons/react/outline";
 import Axios from "axios";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../contexts/UserContext";
 function Navbar() {
   let navigate = useNavigate();
   const [navbarVisibility, setNavbarVisibility] = useState(false);

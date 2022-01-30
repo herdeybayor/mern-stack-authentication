@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Home";
-import Login from "./Login";
-import Navbar from "./Navbar";
-import Profile from "./Profile";
-import Register from "./Register";
-import { UserContext } from "./UserContext";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Navbar from "./components/Navbar";
+import Profile from "./pages/Profile";
+import Register from "./pages/Register";
+import { UserContext } from "./contexts/UserContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(

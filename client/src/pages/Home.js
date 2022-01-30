@@ -2,7 +2,7 @@ import { DatabaseIcon, LoginIcon } from "@heroicons/react/outline";
 import Axios from "axios";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../contexts/UserContext";
 function Home() {
   const { setIsLoggedIn } = useContext(UserContext);
   useEffect(() => {

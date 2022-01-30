@@ -1,9 +1,9 @@
 import Axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormGroup from "./FormGroup";
-import SubmitButton from "./SubmitButton";
-import { UserContext } from "./UserContext";
+import FormGroup from "../components/FormGroup";
+import SubmitButton from "../components/SubmitButton";
+import { UserContext } from "../contexts/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
