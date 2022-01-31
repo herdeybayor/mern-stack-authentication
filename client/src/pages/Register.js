@@ -4,6 +4,7 @@ import FormGroup from "../components/FormGroup";
 import SubmitButton from "../components/SubmitButton";
 import Axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import { toast } from "react-toastify";
 function Register() {
   let navigate = useNavigate();
   const { setIsLoggedIn } = useContext(UserContext);
@@ -71,9 +72,16 @@ function Register() {
       url: "http://localhost:3001/register",
     })
       .then((res) => {
-        setIsLoggedIn(res.data);
-        localStorage.setItem("user", JSON.stringify(res.data));
-        navigate("/profile", { replace: true });
+        if (res.data.msg === "Registration Successful!") {
+          setIsLoggedIn(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data));
+          toast.success(res.data.msg);
+          navigate("/profile", { replace: true });
+        } else {
+          setIsLoggedIn(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data));
+          toast.error(res.data.msg);
+        }
       })
       .catch((err) => {
         console.log(err);

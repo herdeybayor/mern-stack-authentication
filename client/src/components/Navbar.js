@@ -10,10 +10,12 @@ import {
 } from "@heroicons/react/outline";
 import Axios from "axios";
 import { UserContext } from "../contexts/UserContext";
+import { toast } from "react-toastify";
+import { ThemeContext } from "../contexts/ThemeContext";
 function Navbar() {
   let navigate = useNavigate();
   const [navbarVisibility, setNavbarVisibility] = useState(false);
-  const [theme, setTheme] = useState(localStorage.theme);
+  const { theme, setTheme } = useContext(ThemeContext);
   const colorTheme = theme === "dark" ? "light" : "dark";
 
   useEffect(() => {
@@ -35,6 +37,7 @@ function Navbar() {
       .then((res) => {
         setIsLoggedIn(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
+        toast.success(res.data.msg);
         navigate("/", { replace: true });
       })
       .catch((err) => {
@@ -128,26 +131,42 @@ function Navbar() {
           <HomeIcon className="h-5 w-5" />
           <p className="text-xl font-medium">Home</p>
         </Link>
-        <Link
-          to="/login"
-          className="flex items-center border-b-2 border-teal-400 dark:border-black py-4 text-teal-700 dark:text-black"
-          onClick={() => {
-            setNavbarVisibility(false);
-          }}
-        >
-          <LoginIcon className="h-5 w-5" />
-          <p className="text-xl font-medium">Login</p>
-        </Link>
-        <Link
-          to="/register"
-          className="flex items-center py-4 text-teal-700 dark:text-black"
-          onClick={() => {
-            setNavbarVisibility(false);
-          }}
-        >
-          <DatabaseIcon className="h-5 w-5" />
-          <p className="text-xl font-medium">Register</p>
-        </Link>
+        {isLoggedIn.loggedIn ? (
+          <Link
+            onClick={(e) => {
+              handleLogout(e);
+              setNavbarVisibility(false);
+            }}
+            to="/logout"
+            className="flex items-center py-4 text-teal-700 dark:text-black"
+          >
+            <LogoutIcon className="h-5 w-5" />
+            <p className="text-xl font-medium">Logout</p>
+          </Link>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="flex items-center border-b-2 border-teal-400 dark:border-black py-4 text-teal-700 dark:text-black"
+              onClick={() => {
+                setNavbarVisibility(false);
+              }}
+            >
+              <LoginIcon className="h-5 w-5" />
+              <p className="text-xl font-medium">Login</p>
+            </Link>
+            <Link
+              to="/register"
+              className="flex items-center py-4 text-teal-700 dark:text-black"
+              onClick={() => {
+                setNavbarVisibility(false);
+              }}
+            >
+              <DatabaseIcon className="h-5 w-5" />
+              <p className="text-xl font-medium">Register</p>
+            </Link>
+          </>
+        )}
       </div>
       <div
         className={

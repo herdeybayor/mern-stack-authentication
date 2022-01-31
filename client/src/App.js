@@ -6,6 +6,9 @@ import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import { UserContext } from "./contexts/UserContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ThemeContext } from "./contexts/ThemeContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -13,19 +16,22 @@ function App() {
       ? { loggedIn: false }
       : JSON.parse(localStorage.user)
   );
-  /* const [isLoggedIn, setIsLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("user"))
-  ); */
+  const [theme, setTheme] = useState(
+    localStorage.user === undefined ? "light" : localStorage.theme
+  );
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
+          <Navbar />
+          <ToastContainer theme={theme} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </ThemeContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
   );

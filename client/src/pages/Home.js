@@ -9,7 +9,7 @@ function Home() {
     Axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:3001/page",
+      url: "http://localhost:3001/user",
     })
       .then((res) => {
         setIsLoggedIn(res.data);
